@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onboarding mesures — DIRIS Digiware</title>
+<style>
+  :root{
+    --navy:#1f3864; --blue:#2e5496; --light:#e8eef8; --line:#c9d3e6;
+    --grey:#f5f6f8; --ok:#1d9e75; --ink:#1c2433; --muted:#5f6b80;
+  }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#eef1f6;line-height:1.5}
+  header{background:var(--navy);color:#fff;padding:22px 28px}
+  header h1{margin:0;font-size:20px;font-weight:600}
+  header p{margin:4px 0 0;color:#c7d2e8;font-size:13px}
+  main{max-width:960px;margin:20px auto;padding:0 16px 80px}
+  section.card{background:#fff;border:1px solid var(--line);border-radius:10px;margin:16px 0;overflow:hidden}
+  section.card>h2{margin:0;background:var(--light);color:var(--navy);font-size:15px;padding:12px 18px;border-bottom:1px solid var(--line)}
+  .body{padding:16px 18px}
+  label{font-size:13px;font-weight:600;color:var(--ink);display:block;margin:0 0 4px}
+  .hint{font-size:12px;color:var(--muted);font-weight:400}
+  input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{
+    width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:14px;font-family:inherit;background:#fff}
+  textarea{min-height:60px;resize:vertical}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px 16px}
+  .field{margin-bottom:12px}
+  @media(max-width:640px){.grid,.grid3{grid-template-columns:1fr}}
+  button{font-family:inherit;font-size:14px;border-radius:6px;border:1px solid var(--blue);cursor:pointer}
+  .btn{background:var(--blue);color:#fff;padding:9px 16px}
+  .btn:hover{background:var(--navy)}
+  .btn-ghost{background:#fff;color:var(--blue);padding:7px 12px}
+  .btn-ghost:hover{background:var(--light)}
+  .depart{border:1px solid var(--line);border-radius:8px;padding:12px;margin:10px 0;background:var(--grey)}
+  .depart .row{display:grid;grid-template-columns:44px 1fr 1fr;gap:10px;align-items:end}
+  .depart .num{font-weight:700;color:var(--blue);text-align:center;padding-bottom:9px}
+  .modechoice{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+  .modechoice .opt{flex:1;min-width:220px;border:2px solid var(--line);border-radius:8px;padding:12px;cursor:pointer;background:#fff}
+  .modechoice .opt.sel{border-color:var(--blue);background:var(--light)}
+  .modechoice .opt b{color:var(--navy)}
+  .famille{border:1px solid var(--line);border-radius:8px;margin:10px 0;overflow:hidden}
+  .famille>.fh{background:#eef2fa;padding:9px 12px;font-weight:600;color:var(--navy);display:flex;justify-content:space-between;cursor:pointer}
+  .famille .fb{padding:8px 12px}
+  .mesure{padding:8px 4px;border-top:1px dashed var(--line)}
+  .mesure:first-child{border-top:none}
+  .mesure>.top{display:flex;align-items:center;gap:8px}
+  .mesure .sub{margin:8px 0 2px 26px;padding:8px 10px;background:var(--grey);border-radius:6px;font-size:13px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+  .chip{border:1px solid var(--line);border-radius:14px;padding:3px 10px;font-size:12px;cursor:pointer;background:#fff;user-select:none}
+  .chip.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .ranks{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:5px;margin-top:6px}
+  .rank{border:1px solid var(--line);border-radius:5px;text-align:center;padding:4px 0;font-size:12px;cursor:pointer;background:#fff;user-select:none}
+  .rank.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .rank-tools{margin:6px 0}
+  .rank-tools button{font-size:12px;padding:3px 8px;margin-right:6px}
+  input[type=checkbox]{width:16px;height:16px}
+  .bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:12px 20px;display:flex;gap:12px;justify-content:flex-end;align-items:center;box-shadow:0 -2px 8px rgba(0,0,0,.06)}
+  .bar .count{margin-right:auto;color:var(--muted);font-size:13px}
+  .note{background:#fff8e6;border:1px solid #f0d488;border-radius:6px;padding:8px 12px;font-size:13px;margin:8px 0}
+  #apercu{white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:#0f1b2d;color:#d6e2f5;padding:14px;border-radius:8px;max-height:300px;overflow:auto}
+  @media print{
+    header,.bar,.no-print{display:none}
+    body{background:#fff}
+    section.card{border:none;page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Fiche d'onboarding — Campagne de mesures DIRIS Digiware</h1>
+  <p>À remplir par le client. Enregistré automatiquement dans votre navigateur. Terminez par « Générer le récapitulatif ».</p>
+</header>
+
+<main>
+  <!-- 1. INFOS CLIENT / PROJET -->
+  <section class="card">
+    <h2>1. Informations client &amp; projet</h2>
+    <div class="body">
+      <div class="grid">
+        <div class="field"><label>Entreprise</label><input type="text" id="c_entreprise"></div>
+        <div class="field"><label>Site / établissement</label><input type="text" id="c_site"></div>
+        <div class="field"><label>Contact — Nom</label><input type="text" id="c_nom"></div>
+        <div class="field"><label>Contact — Prénom</label><input type="text" id="c_prenom"></div>
+        <div class="field"><label>Fonction</label><input type="text" id="c_fonction"></div>
+        <div class="field"><label>Téléphone</label><input type="tel" id="c_tel"></div>
+        <div class="field"><label>Email</label><input type="email" id="c_email"></div>
+        <div class="field"><label>Adresse du site</label><input type="text" id="c_adresse"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>Point de livraison / tension</label>
+          <select id="c_tension"><option value="">—</option><option>BT (230/400 V)</option><option>HTA (20 kV)</option><option>Autre</option></select></div>
+        <div class="field"><label>Régime de neutre</label>
+          <select id="c_neutre"><option value="">—</option><option>TT</option><option>TN-S</option><option>TN-C</option><option>IT</option><option>Ne sais pas</option></select></div>
+        <div class="field"><label>Puissance souscrite (kVA)</label><input type="text" id="c_psouscrite"></div>
+      </div>
+      <div class="grid3">
+        <div class="field"><label>Date de début souhaitée</label><input type="date" id="c_debut"></div>
+        <div class="field"><label>Date de fin souhaitée</label><input type="date" id="c_fin"></div>
+        <div class="field"><label>Pas d'enregistrement</label>
+          <select id="c_pas"><option value="">—</option><option>1 min</option><option>5 min</option><option>10 min</option><option>15 min</option></select></div>
+      </div>
+      <div class="field"><label>Objectif principal de la campagne <span class="hint">(plusieurs choix possibles)</span></label>
+        <div class="chips" id="c_objectifs"></div></div>
+      <div class="grid">
+        <div class="field"><label>Normes de référence</label><input type="text" id="c_normes" placeholder="ex. EN 50160, CEI 61000-2-2"></div>
+        <div class="field"><label>Livrables attendus</label><input type="text" id="c_livrables" placeholder="ex. Synthèse Excel + Rapport Word"></div>
+      </div>
+      <div class="field"><label>Remarques / contexte (problème constaté, contraintes…)</label><textarea id="c_remarques"></textarea></div>
+    </div>
+  </section>
+
+  <!-- 2. DEPARTS -->
+  <section class="card">
+    <h2>2. Départs à mesurer</h2>
+    <div class="body">
+      <div class="grid" style="align-items:end">
+        <div class="field"><label>Nombre de départs mesurés <span class="hint">(1 à 100)</span></label>
+          <input type="number" id="nbDeparts" min="1" max="100" step="1" placeholder="ex. 12"></div>
+        <div class="field" style="display:flex;align-items:flex-end"><button class="btn" id="genDeparts" type="button">Générer les départs</button></div>
+      </div>
+      <div id="departs"></div>
+    </div>
+  </section>
+
+  <!-- 3. MESURES -->
+  <section class="card">
+    <h2>3. Mesures souhaitées</h2>
+    <div class="body">
+      <p class="hint">Choisissez comment définir les grandeurs à mesurer (s'applique à l'ensemble des départs) :</p>
+      <div class="modechoice">
+        <div class="opt" data-mode="modele" id="optModele"><b>Suivre un modèle</b><br><span class="hint">Un jeu de mesures pré-sélectionné selon l'usage courant.</span></div>
+        <div class="opt" data-mode="libre" id="optLibre"><b>Mode libre</b><br><span class="hint">Vous voyez toutes les mesures possibles et cochez les vôtres.</span></div>
+      </div>
+
+      <div id="zoneModele" style="display:none">
+        <div class="field"><label>Modèle</label>
+          <select id="modeleSel"><option value="">— Choisir un modèle —</option></select></div>
+        <div id="modeleDetail" class="note" style="display:none"></div>
+      </div>
+
+      <div id="zoneLibre" style="display:none">
+        <div id="catalogue"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. RECAP -->
+  <section class="card no-print">
+    <h2>4. Récapitulatif &amp; envoi</h2>
+    <div class="body">
+      <p class="hint">Cliquez pour générer le récapitulatif. Renvoyez ensuite le fichier téléchargé (ou imprimez cette page en PDF) à votre interlocuteur.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+        <button class="btn" id="btnRecap" type="button">Générer le récapitulatif</button>
+        <button class="btn-ghost" id="btnJson" type="button">Télécharger (.json)</button>
+        <button class="btn-ghost" id="btnCsv" type="button">Télécharger (.csv)</button>
+        <button class="btn-ghost" id="btnPrint" type="button">Imprimer / PDF</button>
+        <button class="btn-ghost" id="btnReset" type="button" style="border-color:#c33;color:#c33">Tout effacer</button>
+      </div>
+      <div id="apercu">Le récapitulatif s'affichera ici.</div>
+    </div>
+  </section>
+</main>
+
+<div class="bar no-print">
+  <span class="count" id="statusBar">Fiche vierge</span>
+  <button class="btn" id="btnRecap2" type="button">Générer le récapitulatif</button>
+</div>
+
+<script>
+"use strict";
+
+/* ===== CATALOGUE (extrait des tables MODBUS I-35 + U-30) ===== */
+const OBJECTIFS = ["Équilibrage des charges","Compensation réactive (cos φ)","Analyse harmonique",
+  "Sous-comptage / refacturation","Dimensionnement (câbles/protections)","Diagnostic de perturbations","Bilan énergétique"];
+
+const RANGS = []; for (let r=2; r<=51; r++) RANGS.push(r);
+
+// Motif de généralisation : chaque mesure peut avoir
+//   phases: [..]  -> puce multi-sélection
+//   options: [{id,label,choices,multi}] -> sous-choix
+//   ranks: true   -> grille de rangs d'harmoniques
+const CATALOGUE = [
+  {famille:"Courants", mesures:[
+    {id:"I", label:"Courants par phase", phases:["I1","I2","I3","In","I système"]},
+    {id:"Ideseq", label:"Déséquilibre de courant (%)", options:[{id:"comp",label:"Composantes",choices:["Global","Direct / inverse / homopolaire"],multi:false}]},
+    {id:"Icrete", label:"Facteur de crête (courant)", phases:["I1","I2","I3","In"]},
+  ]},
+  {famille:"Tensions", mesures:[
+    {id:"V", label:"Tensions simples (phase-neutre)", phases:["V1","V2","V3","Vn"]},
+    {id:"U", label:"Tensions composées (phase-phase)", phases:["U12","U23","U31"]},
+    {id:"Vdeseq", label:"Déséquilibre de tension (%)", options:[{id:"comp",label:"Composantes",choices:["Global","Direct / inverse / homopolaire"],multi:false}]},
+  ]},
+  {famille:"Fréquence", mesures:[
+    {id:"F", label:"Fréquence réseau (Hz)"},
+  ]},
+  {famille:"Puissances", mesures:[
+    {id:"P", label:"Puissance active P (W)", options:[
+      {id:"sens",label:"Sens",choices:["Import (+)","Export (−)","Les deux"],multi:false},
+      {id:"detail",label:"Détail",choices:["Totale","Par phase"],multi:true}]},
+    {id:"Q", label:"Puissance réactive Q (var)", options:[
+      {id:"nature",label:"Nature",choices:["Inductive","Capacitive","Les deux"],multi:false},
+      {id:"detail",label:"Détail",choices:["Totale","Par phase"],multi:true}]},
+    {id:"S", label:"Puissance apparente S (VA)", options:[
+      {id:"detail",label:"Détail",choices:["Totale","Par phase"],multi:true}]},
+    {id:"Pdemand", label:"Puissance moyenne / prédictive (demand)"},
+  ]},
+  {famille:"Facteur de puissance", mesures:[
+    {id:"PF", label:"Facteur de puissance / cos φ / tan φ", phases:["Total","Phase 1","Phase 2","Phase 3"]},
+  ]},
+  {famille:"Énergies", mesures:[
+    {id:"Ea", label:"Énergie active (kWh)", options:[
+      {id:"sens",label:"Sens",choices:["Importée (Ea+)","Exportée (Ea−)","Les deux"],multi:false},
+      {id:"periode",label:"Compteur",choices:["Totale","Partielle"],multi:true}]},
+    {id:"Er", label:"Énergie réactive (kvarh)", options:[
+      {id:"nature",label:"Nature",choices:["Inductive","Capacitive","Les deux"],multi:false},
+      {id:"periode",label:"Compteur",choices:["Totale","Partielle"],multi:true}]},
+    {id:"Es", label:"Énergie apparente (kVAh)", options:[
+      {id:"periode",label:"Compteur",choices:["Totale","Partielle"],multi:true}]},
+  ]},
+  {famille:"Qualité &amp; harmoniques", mesures:[
+    {id:"THDI", label:"THD courant (%)", phases:["I1","I2","I3","In","Système"]},
+    {id:"THDU", label:"THD tension (%)", phases:["V1","V2","V3","U12","U23","U31","Système"]},
+    {id:"TDD", label:"Distorsion de demande (TDD, %)", phases:["I1","I2","I3","In","Système"]},
+    {id:"Kfactor", label:"Facteur K (déclassement transformateur)", phases:["I1","I2","I3","In"]},
+    {id:"harmo", label:"Harmoniques individuels par rang", ranks:true,
+      options:[{id:"grandeur",label:"Sur",choices:["Courant","Tension"],multi:true}]},
+  ]},
+  {famille:"Événements qualité (EN 50160)", mesures:[
+    {id:"dip", label:"Creux de tension"},
+    {id:"swell", label:"Surtensions"},
+    {id:"interruption", label:"Coupures brèves"},
+    {id:"inrush", label:"Courant d'appel (inrush)"},
+  ]},
+  {famille:"Options transverses", mesures:[
+    {id:"minmax", label:"Min / Max horodatés", note:"s'applique aux grandeurs cochées ci-dessus (natif sur module I-35)"},
+    {id:"harmoNote", label:"Enregistrement de tendances (courbes dans le temps)"},
+  ]},
+];
+
+const MODELES = {
+  "Suivi de charge (courants)":       ["I","Ideseq","P","minmax","harmoNote"],
+  "Bilan énergétique":                ["Ea","Er","Es","P","Q","S","PF","harmoNote"],
+  "Qualité &amp; harmoniques":        ["V","U","THDI","THDU","harmo","Vdeseq","Ideseq","dip","swell"],
+  "Diagnostic complet":               CATALOGUE.flatMap(f=>f.mesures.map(m=>m.id)),
+};
+
+/* ===== ÉTAT ===== */
+const state = {mode:"", modele:"", mesures:{}}; // mesures[id] = {on, phases:[], options:{}, ranks:[]}
+const $ = s => document.querySelector(s);
+const el = (tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const k in attrs){if(k==="class")e.className=attrs[k];else if(k==="html")e.innerHTML=attrs[k];else e.setAttribute(k,attrs[k]);}kids.forEach(k=>e.append(k));return e;};
+
+function ms(id){ if(!state.mesures[id]) state.mesures[id]={on:false,phases:[],options:{},ranks:[]}; return state.mesures[id]; }
+
+/* ===== OBJECTIFS (chips) ===== */
+const selObjectifs = new Set();
+OBJECTIFS.forEach(o=>{
+  const c = el("span",{class:"chip"},o);
+  c.onclick=()=>{ c.classList.toggle("on"); if(selObjectifs.has(o))selObjectifs.delete(o);else selObjectifs.add(o); save(); };
+  $("#c_objectifs").append(c);
+});
+
+/* ===== DÉPARTS ===== */
+$("#genDeparts").onclick=()=>renderDeparts();
+function renderDeparts(){
+  let n = parseInt($("#nbDeparts").value,10);
+  if(isNaN(n)||n<1){alert("Indiquez un nombre de départs (1 à 100).");return;}
+  if(n>100){n=100; $("#nbDeparts").value=100; alert("Bornage à 100 départs maximum.");}
+  const prev = (state.departs||[]);
+  const box = $("#departs"); box.innerHTML="";
+  const arr=[];
+  for(let i=1;i<=n;i++){
+    const p = prev[i-1]||{nom:"",charge:""};
+    arr.push(p);
+    const d = el("div",{class:"depart"});
+    const row = el("div",{class:"row"});
+    row.append(el("div",{class:"num"},"#"+i));
+    const f1=el("div",{class:"field"}); f1.append(el("label",{},"Nom du départ"));
+    const inNom=el("input",{type:"text",placeholder:"ex. TGBT – Four 1"}); inNom.value=p.nom;
+    inNom.oninput=()=>{p.nom=inNom.value;save();}; f1.append(inNom);
+    const f2=el("div",{class:"field"}); f2.append(el("label",{},"Type de charge (optionnel)"));
+    const inCh=el("input",{type:"text",placeholder:"ex. Moteur, éclairage, variateur"}); inCh.value=p.charge;
+    inCh.oninput=()=>{p.charge=inCh.value;save();}; f2.append(inCh);
+    row.append(f1,f2); d.append(row); box.append(d);
+  }
+  state.departs=arr; save();
+}
+
+/* ===== MODE MESURES ===== */
+document.querySelectorAll(".modechoice .opt").forEach(o=>{
+  o.onclick=()=>setMode(o.dataset.mode);
+});
+function setMode(m){
+  state.mode=m;
+  $("#optModele").classList.toggle("sel",m==="modele");
+  $("#optLibre").classList.toggle("sel",m==="libre");
+  $("#zoneModele").style.display = m==="modele"?"block":"none";
+  $("#zoneLibre").style.display  = m==="libre"?"block":"none";
+  if(m==="libre" && !$("#catalogue").hasChildNodes()) renderCatalogue();
+  save();
+}
+
+/* ----- Modèles ----- */
+Object.keys(MODELES).forEach(k=>$("#modeleSel").append(el("option",{value:k},k.replace("&amp;","&"))));
+$("#modeleSel").onchange=()=>{
+  state.modele=$("#modeleSel").value;
+  const ids=MODELES[state.modele]||[];
+  const noms=ids.map(id=>labelOf(id)).filter(Boolean);
+  const box=$("#modeleDetail");
+  if(ids.length){box.style.display="block";box.innerHTML="<b>Ce modèle inclut :</b> "+noms.join(" · ");}
+  else box.style.display="none";
+  save();
+};
+function labelOf(id){for(const f of CATALOGUE)for(const m of f.mesures)if(m.id===id)return m.label.replace("&amp;","&");return "";}
+
+/* ----- Catalogue (mode libre) ----- */
+function renderCatalogue(){
+  const root=$("#catalogue"); root.innerHTML="";
+  CATALOGUE.forEach(fam=>{
+    const wrap=el("div",{class:"famille"});
+    const fb=el("div",{class:"fb"});
+    const head=el("div",{class:"fh"},el("span",{html:fam.famille}),el("span",{},"▾"));
+    head.onclick=()=>{fb.style.display = fb.style.display==="none"?"block":"none";};
+    wrap.append(head,fb);
+    fam.mesures.forEach(m=>fb.append(renderMesure(m)));
+    root.append(wrap);
+  });
+}
+function renderMesure(m){
+  const box=el("div",{class:"mesure"});
+  const st=ms(m.id);
+  const top=el("div",{class:"top"});
+  const cb=el("input",{type:"checkbox"}); cb.checked=st.on;
+  const lab=el("label",{style:"margin:0;font-weight:600",html:m.label});
+  top.append(cb,lab); box.append(top);
+  const sub=el("div",{class:"sub"}); sub.style.display=st.on?"block":"none";
+  if(m.note) sub.append(el("div",{class:"hint",html:m.note}));
+
+  if(m.phases){
+    sub.append(el("div",{},"Phases / grandeurs :"));
+    const chips=el("div",{class:"chips"});
+    m.phases.forEach(ph=>{
+      const c=el("span",{class:"chip"+(st.phases.includes(ph)?" on":"")},ph);
+      c.onclick=()=>{const i=st.phases.indexOf(ph); if(i<0)st.phases.push(ph);else st.phases.splice(i,1); c.classList.toggle("on"); save();};
+      chips.append(c);
+    });
+    sub.append(chips);
+  }
+  if(m.options){
+    m.options.forEach(op=>{
+      sub.append(el("div",{style:"margin-top:6px"},op.label+" :"));
+      const chips=el("div",{class:"chips"});
+      if(!st.options[op.id]) st.options[op.id]=[];
+      op.choices.forEach(ch=>{
+        const c=el("span",{class:"chip"+(st.options[op.id].includes(ch)?" on":"")},ch);
+        c.onclick=()=>{
+          let cur=st.options[op.id];
+          if(op.multi){const i=cur.indexOf(ch);if(i<0)cur.push(ch);else cur.splice(i,1);c.classList.toggle("on");}
+          else{st.options[op.id]=[ch]; chips.querySelectorAll(".chip").forEach(x=>x.classList.remove("on")); c.classList.add("on");}
+          save();
+        };
+        chips.append(c);
+      });
+      sub.append(chips);
+    });
+  }
+  if(m.ranks){
+    sub.append(el("div",{style:"margin-top:6px"},"Rangs d'harmoniques (2 à 51) :"));
+    const tools=el("div",{class:"rank-tools"});
+    const bOdd=el("button",{class:"btn-ghost",type:"button"},"Rangs impairs");
+    const bAll=el("button",{class:"btn-ghost",type:"button"},"Tous");
+    const bNone=el("button",{class:"btn-ghost",type:"button"},"Aucun");
+    tools.append(bOdd,bAll,bNone); sub.append(tools);
+    const grid=el("div",{class:"ranks"});
+    const draw=()=>grid.querySelectorAll(".rank").forEach(r=>r.classList.toggle("on",st.ranks.includes(+r.dataset.r)));
+    RANGS.forEach(r=>{
+      const c=el("div",{class:"rank",'data-r':r},String(r));
+      c.onclick=()=>{const i=st.ranks.indexOf(r);if(i<0)st.ranks.push(r);else st.ranks.splice(i,1);draw();save();};
+      grid.append(c);
+    });
+    bOdd.onclick=()=>{st.ranks=RANGS.filter(r=>r%2===1);draw();save();};
+    bAll.onclick=()=>{st.ranks=RANGS.slice();draw();save();};
+    bNone.onclick=()=>{st.ranks=[];draw();save();};
+    sub.append(grid); draw();
+  }
+  box.append(sub);
+  cb.onchange=()=>{st.on=cb.checked; sub.style.display=st.on?"block":"none"; save(); updateStatus();};
+  return box;
+}
+
+/* ===== RÉCAP / EXPORT ===== */
+function collect(){
+  const infos={};
+  ["entreprise","site","nom","prenom","fonction","tel","email","adresse","tension","neutre","psouscrite","debut","fin","pas","normes","livrables","remarques"]
+    .forEach(k=>infos[k]=($("#c_"+k)||{}).value||"");
+  infos.objectifs=[...selObjectifs];
+  const data={infos, departs:(state.departs||[]).map((d,i)=>({n:i+1,nom:d.nom,charge:d.charge})), mode:state.mode, mesures:[]};
+  if(state.mode==="modele"){
+    data.modele=state.modele;
+    data.mesures=(MODELES[state.modele]||[]).map(id=>({mesure:labelOf(id)}));
+  } else if(state.mode==="libre"){
+    CATALOGUE.forEach(f=>f.mesures.forEach(m=>{
+      const st=state.mesures[m.id];
+      if(st&&st.on){
+        const rec={mesure:m.label.replace("&amp;","&")};
+        if(st.phases.length)rec.phases=st.phases;
+        for(const k in st.options)if(st.options[k].length)rec[k]=st.options[k];
+        if(st.ranks.length)rec.rangs=st.ranks.slice().sort((a,b)=>a-b);
+        data.mesures.push(rec);
+      }
+    }));
+  }
+  return data;
+}
+function recap(){
+  const d=collect();
+  let t="";
+  t+="FICHE D'ONBOARDING — CAMPAGNE DE MESURES\n========================================\n\n";
+  t+="CLIENT\n";
+  t+="  Entreprise : "+d.infos.entreprise+"\n  Site : "+d.infos.site+"\n";
+  t+="  Contact : "+d.infos.prenom+" "+d.infos.nom+(d.infos.fonction?" ("+d.infos.fonction+")":"")+"\n";
+  t+="  Tél : "+d.infos.tel+"   Email : "+d.infos.email+"\n";
+  t+="  Réseau : "+d.infos.tension+"   Neutre : "+d.infos.neutre+"\n";
+  t+="  Période : "+d.infos.debut+" → "+d.infos.fin+"   Pas : "+d.infos.pas+"\n";
+  t+="  Objectifs : "+(d.infos.objectifs.join(", ")||"—")+"\n";
+  t+="  Normes : "+d.infos.normes+"   Livrables : "+d.infos.livrables+"\n";
+  if(d.infos.remarques)t+="  Remarques : "+d.infos.remarques+"\n";
+  t+="\nDÉPARTS ("+d.departs.length+")\n";
+  d.departs.forEach(x=>t+="  #"+x.n+" "+(x.nom||"(sans nom)")+(x.charge?"  — "+x.charge:"")+"\n");
+  t+="\nMESURES ("+(d.mode==="modele"?("modèle : "+d.modele):"mode libre")+")\n";
+  if(!d.mesures.length)t+="  (aucune mesure sélectionnée)\n";
+  d.mesures.forEach(m=>{
+    let line="  • "+m.mesure;
+    const extra=[];
+    if(m.phases)extra.push(m.phases.join("/"));
+    ["sens","nature","detail","comp","periode","grandeur"].forEach(k=>{if(m[k])extra.push(m[k].join("/"));});
+    if(m.rangs)extra.push("rangs "+m.rangs.join(","));
+    if(extra.length)line+="  ["+extra.join(" · ")+"]";
+    t+=line+"\n";
+  });
+  $("#apercu").textContent=t;
+  return d;
+}
+function download(name,content,type){
+  const b=new Blob([content],{type}); const u=URL.createObjectURL(b);
+  const a=el("a",{href:u,download:name}); document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(u);
+}
+$("#btnRecap").onclick=recap; $("#btnRecap2").onclick=recap;
+$("#btnJson").onclick=()=>{const d=recap();const nom=(d.infos.entreprise||"onboarding").replace(/[^a-z0-9]/gi,"_");download("Onboarding_"+nom+".json",JSON.stringify(d,null,2),"application/json");};
+$("#btnCsv").onclick=()=>{
+  const d=recap(); let rows=[["Section","Champ","Valeur"]];
+  for(const k in d.infos)rows.push(["Client",k,Array.isArray(d.infos[k])?d.infos[k].join(" | "):d.infos[k]]);
+  d.departs.forEach(x=>rows.push(["Départ","#"+x.n,(x.nom||"")+(x.charge?" ("+x.charge+")":"")]));
+  d.mesures.forEach(m=>{
+    const opts=[];["phases","sens","nature","detail","comp","periode","grandeur"].forEach(k=>{if(m[k])opts.push(k+"="+m[k].join("/"));});
+    if(m.rangs)opts.push("rangs="+m.rangs.join(","));
+    rows.push(["Mesure",m.mesure,opts.join(" ; ")]);
+  });
+  const csv=rows.map(r=>r.map(c=>'"'+String(c==null?"":c).replace(/"/g,'""')+'"').join(";")).join("\r\n");
+  const nom=(d.infos.entreprise||"onboarding").replace(/[^a-z0-9]/gi,"_");
+  download("Onboarding_"+nom+".csv","﻿"+csv,"text/csv");
+};
+$("#btnPrint").onclick=()=>{recap();window.print();};
+$("#btnReset").onclick=()=>{if(confirm("Effacer toute la fiche ?")){localStorage.removeItem("onboardingDigiware");location.reload();}};
+
+/* ===== SAUVEGARDE LOCALE ===== */
+function save(){
+  const d=collect();
+  localStorage.setItem("onboardingDigiware",JSON.stringify({d, raw:{mesures:state.mesures, departs:state.departs, mode:state.mode, modele:state.modele}}));
+  updateStatus();
+}
+function updateStatus(){
+  const nbMes = state.mode==="modele" ? (MODELES[state.modele]||[]).length
+              : Object.values(state.mesures).filter(x=>x&&x.on).length;
+  $("#statusBar").textContent=(state.departs?state.departs.length:0)+" départ(s) · "+nbMes+" mesure(s) · enregistré localement";
+}
+function load(){
+  const raw=localStorage.getItem("onboardingDigiware"); if(!raw)return;
+  try{
+    const {d,raw:r}=JSON.parse(raw);
+    for(const k in d.infos){const e=$("#c_"+k); if(e&&typeof d.infos[k]==="string")e.value=d.infos[k];}
+    (d.infos.objectifs||[]).forEach(o=>{selObjectifs.add(o);
+      [...$("#c_objectifs").children].forEach(c=>{if(c.textContent===o)c.classList.add("on");});});
+    if(r){
+      state.mesures=r.mesures||{}; state.departs=r.departs||[]; state.modele=r.modele||"";
+      if(state.departs.length){$("#nbDeparts").value=state.departs.length; renderDeparts();}
+      if(r.mode){setMode(r.mode); if(r.mode==="modele"){$("#modeleSel").value=state.modele; $("#modeleSel").onchange();}}
+    }
+  }catch(e){console.warn("load",e);}
+  updateStatus();
+}
+
+/* détecte les modifs des champs texte pour la sauvegarde */
+document.querySelectorAll("input,select,textarea").forEach(e=>e.addEventListener("change",save));
+load(); updateStatus();
+</script>
+</body>
+</html>
