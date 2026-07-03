@@ -11,9 +11,13 @@
   }
   *{box-sizing:border-box}
   body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#eef1f6;line-height:1.5}
-  header{background:var(--navy);color:#fff;padding:22px 28px}
-  header h1{margin:0;font-size:20px;font-weight:600}
-  header p{margin:4px 0 0;color:#c7d2e8;font-size:13px}
+  header{background:#fff;color:var(--ink);padding:18px 28px 20px;border-bottom:3px solid #e2001a}
+  .brand{display:flex;align-items:baseline;gap:9px;margin-bottom:12px}
+  .brand-eiffage{font-size:30px;font-weight:800;color:#e2001a;letter-spacing:-.6px;line-height:1}
+  .brand-sub{font-size:14px;font-weight:600;color:#333}
+  header h1{margin:0;font-size:20px;font-weight:600;color:var(--navy)}
+  header .intro{margin:8px 0 0;color:#444;font-size:13.5px;max-width:840px;line-height:1.55}
+  header .intro strong{color:#e2001a}
   main{max-width:960px;margin:20px auto;padding:0 16px 80px}
   section.card{background:#fff;border:1px solid var(--line);border-radius:10px;margin:16px 0;overflow:hidden}
   section.card>h2{margin:0;background:var(--light);color:var(--navy);font-size:15px;padding:12px 18px;border-bottom:1px solid var(--line)}
@@ -68,8 +72,16 @@
 </head>
 <body>
 <header>
-  <h1>Fiche d'onboarding — Campagne de mesures DIRIS Digiware</h1>
-  <p>À remplir par le client. Enregistré automatiquement dans votre navigateur. Terminez par « Générer le récapitulatif ».</p>
+  <div class="brand">
+    <span class="brand-eiffage">eiffage</span>
+    <span class="brand-sub">énergie systèmes</span>
+  </div>
+  <h1>Questionnaire — Préparation de votre campagne de mesures électriques</h1>
+  <p class="intro">Bonjour, et merci de votre confiance. Ce questionnaire nous permet de préparer au mieux votre campagne de mesures.
+  <strong>Merci de renseigner</strong> les informations de votre société, le nombre de départs (circuits) à mesurer et leurs noms,
+  puis les grandeurs souhaitées — soit en choisissant un <strong>modèle</strong>, soit en <strong>sélection libre</strong>.
+  Une fois terminé, cliquez sur <strong>TÉLÉCHARGER</strong> en bas de page et renvoyez-nous le fichier obtenu.
+  Vos réponses sont enregistrées automatiquement dans votre navigateur au fur et à mesure.</p>
 </header>
 
 <main>
@@ -151,9 +163,8 @@
     <div class="body">
       <p class="hint">Cliquez pour générer le récapitulatif. Renvoyez ensuite le fichier téléchargé (ou imprimez cette page en PDF) à votre interlocuteur.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
-        <button class="btn" id="btnRecap" type="button">Générer le récapitulatif</button>
-        <button class="btn-ghost" id="btnJson" type="button">Télécharger (.json)</button>
-        <button class="btn-ghost" id="btnCsv" type="button">Télécharger (.csv)</button>
+        <button class="btn-ghost" id="btnRecap" type="button">Vérifier le récapitulatif</button>
+        <button class="btn" id="btnCsv" type="button">TÉLÉCHARGER</button>
         <button class="btn-ghost" id="btnPrint" type="button">Imprimer / PDF</button>
         <button class="btn-ghost" id="btnReset" type="button" style="border-color:#c33;color:#c33">Tout effacer</button>
       </div>
@@ -164,7 +175,7 @@
 
 <div class="bar no-print">
   <span class="count" id="statusBar">Fiche vierge</span>
-  <button class="btn" id="btnRecap2" type="button">Générer le récapitulatif</button>
+  <button class="btn" id="btnRecap2" type="button">TÉLÉCHARGER</button>
 </div>
 
 <script>
@@ -233,15 +244,18 @@ const CATALOGUE = [
     {id:"inrush", label:"Courant d'appel (inrush)"},
   ]},
   {famille:"Options transverses", mesures:[
-    {id:"minmax", label:"Min / Max horodatés", note:"s'applique aux grandeurs cochées ci-dessus (natif sur module I-35)"},
-    {id:"harmoNote", label:"Enregistrement de tendances (courbes dans le temps)"},
+    {id:"moyenne", label:"Valeurs moyennes (sur la période d'intégration)", note:"s'applique aux grandeurs cochées ci-dessus"},
+    {id:"minmax", label:"Min / Max horodatés", note:"horodatage de l'extrême (natif sur module I-35)"},
+    {id:"fondamental", label:"Valeurs fondamentales (composante H1, hors harmoniques)"},
+    {id:"tendances", label:"Enregistrement de tendances (courbes dans le temps)"},
+    {id:"waveform", label:"Capture de forme d'onde (diagnostic fin des perturbations)"},
   ]},
 ];
 
 const MODELES = {
-  "Suivi de charge (courants)":       ["I","Ideseq","P","minmax","harmoNote"],
-  "Bilan énergétique":                ["Ea","Er","Es","P","Q","S","PF","harmoNote"],
-  "Qualité &amp; harmoniques":        ["V","U","THDI","THDU","harmo","Vdeseq","Ideseq","dip","swell"],
+  "Suivi de charge (courants)":       ["I","Ideseq","P","moyenne","minmax","tendances"],
+  "Bilan énergétique":                ["Ea","Er","Es","P","Q","S","PF","moyenne","tendances"],
+  "Qualité &amp; harmoniques":        ["V","U","THDI","THDU","harmo","Vdeseq","Ideseq","dip","swell","waveform"],
   "Diagnostic complet":               CATALOGUE.flatMap(f=>f.mesures.map(m=>m.id)),
 };
 
@@ -445,8 +459,7 @@ function download(name,content,type){
   const b=new Blob([content],{type}); const u=URL.createObjectURL(b);
   const a=el("a",{href:u,download:name}); document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(u);
 }
-$("#btnRecap").onclick=recap; $("#btnRecap2").onclick=recap;
-$("#btnJson").onclick=()=>{const d=recap();const nom=(d.infos.entreprise||"onboarding").replace(/[^a-z0-9]/gi,"_");download("Onboarding_"+nom+".json",JSON.stringify(d,null,2),"application/json");};
+$("#btnRecap").onclick=recap; $("#btnRecap2").onclick=()=>$("#btnCsv").click();
 $("#btnCsv").onclick=()=>{
   const d=recap(); let rows=[["Section","Champ","Valeur"]];
   for(const k in d.infos)rows.push(["Client",k,Array.isArray(d.infos[k])?d.infos[k].join(" | "):d.infos[k]]);
